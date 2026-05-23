@@ -241,6 +241,96 @@ a {
   line-height: 1.6;
 }
 
+.flow-intro {
+  max-width: 880px;
+  margin-bottom: 20px;
+  padding: 18px 20px;
+  border: 1px solid #ded8ca;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.flow-intro p {
+  margin: 0;
+  color: #53606f;
+  line-height: 1.8;
+}
+
+.flow-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.flow-card {
+  min-height: 310px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 18px;
+  border: 1px solid #ded8ca;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.flow-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  color: #1f7a5c;
+}
+
+.flow-card-head span {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  background: #edf7f2;
+  color: #1f7a5c;
+  font-weight: 900;
+}
+
+.flow-card h3 {
+  margin: 0;
+  color: #202124;
+  font-size: 20px;
+}
+
+.flow-card p {
+  margin: 0;
+  color: #53606f;
+  line-height: 1.7;
+}
+
+.flow-meta,
+.flow-question {
+  display: grid;
+  gap: 6px;
+  padding: 12px;
+  border-radius: 8px;
+  background: #f8f5ed;
+}
+
+.flow-question {
+  margin-top: auto;
+  background: #eef4fb;
+}
+
+.flow-meta strong,
+.flow-question strong {
+  color: #1f2933;
+  font-size: 13px;
+}
+
+.flow-meta span,
+.flow-question span {
+  color: #53606f;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
 .spec-table {
   margin-top: 18px;
   display: grid;
@@ -347,6 +437,7 @@ a {
   .hero,
   .two-column,
   .module-grid,
+  .flow-grid,
   .value-grid {
     grid-template-columns: 1fr;
   }
