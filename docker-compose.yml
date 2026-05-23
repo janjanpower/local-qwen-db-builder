@@ -1,0 +1,61 @@
+services:
+  ollama:
+    image: ollama/ollama:latest
+    container_name: local-qwen-db-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    restart: unless-stopped
+
+  qwen-init:
+    image: ollama/ollama:latest
+    container_name: local-qwen-db-qwen-init
+    depends_on:
+      - ollama
+    environment:
+      OLLAMA_HOST: "http://ollama:11434"
+    entrypoint: ["/bin/sh", "-c"]
+    command: >
+      "
+      echo 'Waiting for Ollama...' &&
+      sleep 10 &&
+      echo 'Pulling Qwen model...' &&
+      ollama pull qwen2.5:3b-instruct &&
+      echo 'Qwen model ready.'
+      "
+    volumes:
+      - ollama_data:/root/.ollama
+    restart: "no"
+
+  backend:
+    build:
+      context: ./backend
+    container_name: local-qwen-db-backend
+    ports:
+      - "8000:8000"
+    environment:
+      USE_OLLAMA: "true"
+      OLLAMA_BASE_URL: "http://ollama:11434"
+      OLLAMA_MODEL: "qwen2.5:3b-instruct"
+      DATABASE_PATH: "/data/local_builder.db"
+    volumes:
+      - local_builder_data:/data
+    depends_on:
+      - ollama
+      - qwen-init
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: local-qwen-db-frontend
+    ports:
+      - "5173:5173"
+    environment:
+      VITE_API_BASE_URL: "http://localhost:8000"
+    depends_on:
+      - backend
+
+volumes:
+  local_builder_data:
+  ollama_data:
